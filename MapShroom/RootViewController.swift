@@ -16,17 +16,19 @@ class RootViewController: UIViewController {
     }
     
     private var mapNeedsToBeCentered : Bool = false
-    private let shrooms : [Shroom] = [
-        Shroom(title: "Подосиновик",
-               locationName: "Нашел",
-               userId: "123456789",
-               coordinate: CLLocationCoordinate2D(latitude: 60.052670, longitude: 30.324212)
-              ),
-        Shroom(title: "Подберезовик",
-               locationName: "Топ место",
-               userId: "123456789",
-               coordinate: CLLocationCoordinate2D(latitude: 60.053373, longitude: 30.329288)
-              )
+    private let shrooms : [ShroomAnnotation] = [
+        ShroomAnnotation(title: "Подосиновик",
+                         subtitle: "Нашел",
+                         image: URL(string: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Mushroom.svg")!, userId: "123456789",
+                         coordinate: CLLocationCoordinate2D(latitude: 60.052670, longitude: 30.324212),
+                         type: "podos1"
+                        ),
+        ShroomAnnotation(title: "Подберезовик",
+                         subtitle: "Топ место",
+                         image: URL(string: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Mushroom.svg")!, userId: "123456789",
+                         coordinate: CLLocationCoordinate2D(latitude: 60.053373, longitude: 30.329288),
+                         type: "podb1"
+                        )
     ]
     
     private lazy var mapView : MKMapView = {
@@ -129,7 +131,7 @@ extension RootViewController : CLLocationManagerDelegate {
 
 extension RootViewController : MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? Shroom else {
+        guard let annotation = annotation as? ShroomAnnotation else {
             return nil
         }
         
@@ -150,63 +152,5 @@ extension RootViewController : MKMapViewDelegate {
             view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         return view
-    }
-}
-
-private extension MKMapView {
-  func centerToLocation(_ location: CLLocation,
-                        regionRadius: CLLocationDistance = 1000
-  ) {
-    let coordinateRegion = MKCoordinateRegion(
-      center: location.coordinate,
-      latitudinalMeters: regionRadius,
-      longitudinalMeters: regionRadius)
-      
-    setRegion(coordinateRegion, animated: true)
-  }
-}
-
-protocol MapPoint {
-    var radius: Int { get set }
-    var title: String? { get set }
-    var image: URL? { get set }
-    var locationName: String? { get set }
-    var intensity: Int { get set }
-    var addedBy: String { get }
-    var timestampAdded: Double { get }
-}
-
-class Shroom : NSObject, MapPoint, MKAnnotation {
-    var title: String?
-    var locationName: String?
-    var radius: Int
-    var image: URL?
-    var intensity: Int
-    var addedBy: String
-    var timestampAdded: Double
-    
-    var coordinate: CLLocationCoordinate2D
-    
-    init(title: String?,
-         locationName: String?,
-         radius: Int = 10,
-         image: URL? = nil,
-         intensity: Int = 10,
-         userId: String,
-         coordinate: CLLocationCoordinate2D
-    ) {
-        
-        self.title = title
-        self.locationName = locationName
-        self.radius = radius
-        self.image = image
-        self.intensity = intensity
-        
-        self.addedBy = userId
-        self.timestampAdded = NSDate().timeIntervalSince1970
-        
-        self.coordinate = coordinate
-
-        super.init()
     }
 }

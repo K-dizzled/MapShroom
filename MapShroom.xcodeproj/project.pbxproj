@@ -17,6 +17,12 @@
 		75AACCF327ED1B6B00A3EB20 /* MapShroomUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACCF227ED1B6B00A3EB20 /* MapShroomUITestsLaunchTests.swift */; };
 		75AACD0127ED211E00A3EB20 /* UiView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0027ED211E00A3EB20 /* UiView+Extension.swift */; };
 		75AACD0427EDFF9C00A3EB20 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0327EDFF9C00A3EB20 /* CustomAnnotation.swift */; };
+		75AACD0627EE013B00A3EB20 /* ShroomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0527EE013B00A3EB20 /* ShroomAnnotation.swift */; };
+		75AACD0827EE050700A3EB20 /* MKMapView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0727EE050700A3EB20 /* MKMapView+Extension.swift */; };
+		75AACD0A27EE059200A3EB20 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0927EE059200A3EB20 /* MapViewController.swift */; };
+		75AACD0D27EE115B00A3EB20 /* UiImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0C27EE115B00A3EB20 /* UiImage+Extension.swift */; };
+		75AACD0F27EE1A9B00A3EB20 /* NSDate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0E27EE1A9B00A3EB20 /* NSDate+Extension.swift */; };
+		75AACD1127EE414D00A3EB20 /* ShroomMarkerAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD1027EE414D00A3EB20 /* ShroomMarkerAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,12 @@
 		75AACCF227ED1B6B00A3EB20 /* MapShroomUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapShroomUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		75AACD0027ED211E00A3EB20 /* UiView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiView+Extension.swift"; sourceTree = "<group>"; };
 		75AACD0327EDFF9C00A3EB20 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		75AACD0527EE013B00A3EB20 /* ShroomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShroomAnnotation.swift; sourceTree = "<group>"; };
+		75AACD0727EE050700A3EB20 /* MKMapView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Extension.swift"; sourceTree = "<group>"; };
+		75AACD0927EE059200A3EB20 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		75AACD0C27EE115B00A3EB20 /* UiImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiImage+Extension.swift"; sourceTree = "<group>"; };
+		75AACD0E27EE1A9B00A3EB20 /* NSDate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Extension.swift"; sourceTree = "<group>"; };
+		75AACD1027EE414D00A3EB20 /* ShroomMarkerAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShroomMarkerAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +118,7 @@
 				75AACCCF27ED1B6900A3EB20 /* AppDelegate.swift */,
 				75AACCD127ED1B6900A3EB20 /* SceneDelegate.swift */,
 				75AACCD327ED1B6900A3EB20 /* RootViewController.swift */,
+				75AACD0927EE059200A3EB20 /* MapViewController.swift */,
 				75AACCD827ED1B6B00A3EB20 /* Assets.xcassets */,
 				75AACCDA27ED1B6B00A3EB20 /* LaunchScreen.storyboard */,
 				75AACCDD27ED1B6B00A3EB20 /* Info.plist */,
@@ -134,6 +147,9 @@
 			isa = PBXGroup;
 			children = (
 				75AACD0027ED211E00A3EB20 /* UiView+Extension.swift */,
+				75AACD0727EE050700A3EB20 /* MKMapView+Extension.swift */,
+				75AACD0C27EE115B00A3EB20 /* UiImage+Extension.swift */,
+				75AACD0E27EE1A9B00A3EB20 /* NSDate+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -142,6 +158,8 @@
 			isa = PBXGroup;
 			children = (
 				75AACD0327EDFF9C00A3EB20 /* CustomAnnotation.swift */,
+				75AACD0527EE013B00A3EB20 /* ShroomAnnotation.swift */,
+				75AACD1027EE414D00A3EB20 /* ShroomMarkerAnnotation.swift */,
 			);
 			path = Annotations;
 			sourceTree = "<group>";
@@ -276,11 +294,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75AACD0627EE013B00A3EB20 /* ShroomAnnotation.swift in Sources */,
 				75AACCD427ED1B6900A3EB20 /* RootViewController.swift in Sources */,
+				75AACD1127EE414D00A3EB20 /* ShroomMarkerAnnotation.swift in Sources */,
 				75AACCD027ED1B6900A3EB20 /* AppDelegate.swift in Sources */,
 				75AACD0427EDFF9C00A3EB20 /* CustomAnnotation.swift in Sources */,
+				75AACD0F27EE1A9B00A3EB20 /* NSDate+Extension.swift in Sources */,
 				75AACD0127ED211E00A3EB20 /* UiView+Extension.swift in Sources */,
+				75AACD0D27EE115B00A3EB20 /* UiImage+Extension.swift in Sources */,
 				75AACCD227ED1B6900A3EB20 /* SceneDelegate.swift in Sources */,
+				75AACD0827EE050700A3EB20 /* MKMapView+Extension.swift in Sources */,
+				75AACD0A27EE059200A3EB20 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
