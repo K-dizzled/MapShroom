@@ -12,26 +12,74 @@ import MapKit
 class MapViewController: UIViewController {
     
     private enum Constants {
-        static let mapAnnotationIdentifier = "shroom"
+        static let openBSize: CGFloat = 70
+        static let plusButtonPointSize : CGFloat = 25
+        static let coordinateConstScale : CGFloat = 3000
+        static let navBarHeight : CGFloat = 44
+        static let levelOfAddButton : CGFloat = 0.85
     }
     
-    private var mapNeedsToBeCentered : Bool = false
-    private var locationManager = CLLocationManager()
+    private lazy var visualEffectView: UIView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let view = UIVisualEffectView(effect: blurEffect)
+        
+        view.layer.cornerRadius = Constants.openBSize / 2
+        view.clipsToBounds = true
+        
+        return view
+    }()
+    
+    private lazy var button: UIButton = {
+        let but = UIButton()
+        
+        let config = UIImage.SymbolConfiguration(
+            pointSize: Constants.plusButtonPointSize,
+            weight: .light
+        )
+        
+        but.setImage(
+            UIImage(
+                systemName: "plus",
+                withConfiguration: config
+            )?.withTintColor(
+                .label,
+                renderingMode: .alwaysOriginal
+            ),
+            for: .normal
+        )
+        
+        but.addTarget(self, action: #selector(addFinding), for: .touchUpInside)
 
+        return but
+    }()
+    
     private lazy var mapView : MKMapView = {
         var map = MKMapView()
 
         map.showsUserLocation = true
-        map.showsCompass = false
-        
         mapNeedsToBeCentered = true
         
         return map
     }()
     
-    private var allAnnotations: [MapPoint]?
+    private var mapNeedsToBeCentered : Bool = false
+    private var locationManager = CLLocationManager()
+    private lazy var trackButton = MKUserTrackingButton(mapView: mapView)
     
-    private var displayedAnnotations: [MKAnnotation]? {
+    private var allAnnotations: [Finding] = [
+        Finding(
+            type: .mushroom,
+            latitude: 60.053373,
+            longitude: 30.329288
+        ),
+        Finding(
+            type: .nature,
+            latitude: 60.052670,
+            longitude: 30.324212
+        )
+    ]
+    
+    private var displayedAnnotations: [Finding]? {
         willSet {
             if let currentAnnotations = displayedAnnotations {
                 mapView.removeAnnotations(currentAnnotations)
@@ -47,56 +95,55 @@ class MapViewController: UIViewController {
         }
     }
     
+    private lazy var navBar : UINavigationBar = {
+        let navBar = UINavigationBar()
+        
+        // Make navigation bar transparent
+        navBar.setBackgroundImage(UIImage(), for: .default)
+        navBar.shadowImage = UIImage()
+        navBar.isTranslucent = true
+        navBar.backgroundColor = .clear
+        
+        // Set empty title
+        let navItem = UINavigationItem(title: "")
+        
+        // Add compass to the right of the navigation item
+        let compass = MKCompassButton(mapView: mapView)
+        compass.compassVisibility = .visible
+        navItem.rightBarButtonItem = UIBarButtonItem(customView: compass)
+        mapView.showsCompass = false
+        
+        // Unhides when location authorization is given.
+        trackButton.isHidden = false
+        navItem.leftBarButtonItem = UIBarButtonItem(customView: trackButton)
+    
+        // Add navigation item to navigation bar
+        navBar.setItems([navItem], animated: false)
+        
+        return navBar
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        view.addSubviews(mapView)
-        locationManager.delegate = self
-        //mapView.delegate = self
-        mapView.register(ShroomMarkerAnnotation.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        view.addSubviews(
+            mapView,
+            visualEffectView,
+            button,
+            navBar
+        )
         
-        let authorizationStatus: CLAuthorizationStatus
-        if #available(iOS 14, *) {
-            authorizationStatus = locationManager.authorizationStatus
-        } else {
-            authorizationStatus = CLLocationManager.authorizationStatus()
-        }
+        locationManager.delegate = self
+        mapView.delegate = self
 
-        if authorizationStatus == .authorizedWhenInUse {
+        if locationManager.authorizationStatus == .authorizedWhenInUse {
             locationManager.startUpdatingLocation()
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
         
-        registerMapAnnotationViews()
-        
-        let shroomAnnotation1 = ShroomAnnotation(
-            title: "Подосиновик",
-            subtitle: "Нашел",
-            image: URL(string: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Mushroom.svg")!,
-            userId: "123456789",
-            coordinate: CLLocationCoordinate2D(
-                latitude: 60.052670,
-                longitude: 30.324212
-            ),
-            type: "podos1"
-        )
-        
-        let shroomAnnotation2 = ShroomAnnotation(
-            title: "Подберезовик",
-            subtitle: "Топ место",
-            image: URL(string: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Mushroom.svg")!,
-            userId: "123456789",
-            coordinate: CLLocationCoordinate2D(
-                latitude: 60.053373,
-                longitude: 30.329288
-            ),
-            type: "podb1"
-        )
-        
-        // Create the array of annotations and the specific annotations for the points of interest.
-        allAnnotations = [shroomAnnotation1, shroomAnnotation2]
+        registerAnnotationViewClasses()
         
         // Dispaly all annotations on the map.
         showAllAnnotations()
@@ -106,6 +153,34 @@ class MapViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         layoutMap()
+        layoutAddPointButtonAndVE()
+        //setupCompassButton()
+        layoutNavBar()
+    }
+    
+    private func registerAnnotationViewClasses() {
+        mapView.register(ShroomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(NatureAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+    }
+    
+    private func layoutNavBar() {
+        navBar.frame = CGRect(
+            x: 0, y: view.safeAreaInsets.top,
+            width: view.frame.size.width,
+            height: Constants.navBarHeight
+        )
+    }
+    
+    private func layoutAddPointButtonAndVE() {
+        visualEffectView.frame = CGRect(
+            x: (view.frame.width - Constants.openBSize) / 2,
+            y: view.frame.height * Constants.levelOfAddButton,
+            width: Constants.openBSize,
+            height: Constants.openBSize
+        )
+        
+        button.frame = visualEffectView.frame
     }
     
     private func layoutMap() {
@@ -118,38 +193,12 @@ class MapViewController: UIViewController {
         )
     }
     
-    /// Register the annotation views with the `mapView` so the system can create and efficently reuse the annotation views.
-    /// - Tag: RegisterAnnotationViews
-    private func registerMapAnnotationViews() {
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(ShroomAnnotation.self))
-    }
-    
-    private func displayOneClass(_ annotationType: AnyClass) {
-        let annotation = allAnnotations?.first { (annotation) -> Bool in
-            return annotation.isKind(of: annotationType)
-        }
-        
-        if let oneAnnotation = annotation {
-            displayedAnnotations = [oneAnnotation]
-        } else {
-            displayedAnnotations = []
-        }
-    }
-    
-    private func displaySpecificTypeOfClass(_ annotationType: AnyClass, type: String) {
-        let annotations = allAnnotations?.filter { (annotation) -> Bool in
-            return annotation.isKind(of: annotationType) && annotation.type == type
-        }
-        
-        displayedAnnotations = annotations
-    }
-    
-    private func showOnlyShroomAnnotation() {
-        displayOneClass(ShroomAnnotation.self)
-    }
-    
     private func showAllAnnotations() {
         displayedAnnotations = allAnnotations
+    }
+    
+    @objc private func addFinding() {
+        debugPrint("New item selcted")
     }
 }
 
@@ -157,19 +206,19 @@ extension MapViewController : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 
         switch status {
-        case .notDetermined:
-            debugPrint("NotDetermined")
-        case .restricted:
-            debugPrint("Restricted")
-        case .denied:
-            debugPrint("Denied")
-        case .authorizedAlways:
-            debugPrint("AuthorizedAlways")
-        case .authorizedWhenInUse:
-            debugPrint("AuthorizedWhenInUse")
-            locationManager.startUpdatingLocation()
-        @unknown default:
-            fatalError("Unknown authorization status")
+            case .notDetermined:
+                debugPrint("NotDetermined")
+            case .restricted:
+                locationManager.requestWhenInUseAuthorization()
+            case .denied:
+                locationManager.requestWhenInUseAuthorization()
+            case .authorizedAlways:
+                debugPrint("AuthorizedAlways")
+            case .authorizedWhenInUse:
+                debugPrint("AuthorizedWhenInUse")
+                locationManager.startUpdatingLocation()
+            @unknown default:
+                fatalError("Unknown authorization status")
         }
     }
 
@@ -184,7 +233,11 @@ extension MapViewController : CLLocationManagerDelegate {
             }
                 
             mapView.centerToLocation(location)
-            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 3000, longitudinalMeters: 3000)
+            let coordinateRegion = MKCoordinateRegion(
+                center: location.coordinate,
+                latitudinalMeters: Constants.coordinateConstScale,
+                longitudinalMeters: Constants.coordinateConstScale
+            )
     
             mapView.setRegion(coordinateRegion, animated: true)
             mapNeedsToBeCentered = false
@@ -195,54 +248,40 @@ extension MapViewController : CLLocationManagerDelegate {
         print("Failed to initialize GPS: ", error.localizedDescription)
     }
 }
-//
-//extension MapViewController: MKMapViewDelegate {
-//
-//    /// Called whent he user taps the disclosure button in the Shroom callout.
-//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//
-//        // This illustrates how to detect which annotation type was tapped on for its callout.
-//        if let annotation = view.annotation, annotation.isKind(of: ShroomAnnotation.self) {
-//            debugPrint("User tapped on annotation")
-//        }
-//    }
-//
-//    /// The map view asks `mapView(_:viewFor:)` for an appropiate annotation view for a specific annotation.
-//    /// - Tag: CreateAnnotationViews
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//
-//        guard !annotation.isKind(of: MKUserLocation.self) else {
-//            // Make a fast exit if the annotation is the `MKUserLocation`, as it's not an annotation view we wish to customize.
-//            return nil
-//        }
-//
-//        var annotationView: MKAnnotationView?
-//        if let annotation = annotation as? ShroomAnnotation {
-//            annotationView = setupShroomAnnotationView(for: annotation, on: mapView)
-//        }
-//
-//        return annotationView
-//    }
-//
-//    /// The map view asks `mapView(_:viewFor:)` for an appropiate annotation view for a specific annotation. The annotation
-//    /// should be configured as needed before returning it to the system for display.
-//    /// - Tag: ConfigureAnnotationViews
-//    private func setupShroomAnnotationView(for annotation: ShroomAnnotation, on mapView: MKMapView) -> MKAnnotationView {
-//        let flagAnnotationView = MKAnnotationView()
-//
-//        flagAnnotationView.canShowCallout = true
-//
-//        // Provide the annotation view's image.
-//        let image = #imageLiteral(resourceName: "Image")
-//        flagAnnotationView.image = image
-//        // Provide the left image icon for the annotation.
-//        flagAnnotationView.leftCalloutAccessoryView = UIImageView(image: #imageLiteral(resourceName: "sf_icon"))
-//
-//
-//        // Offset the shroom annotation so that the flag pole rests on the map coordinate.
-//        let offset = CGPoint(x: image.size.width / 2, y: -(image.size.height / 2) )
-//        flagAnnotationView.centerOffset = offset
-//
-//        return flagAnnotationView
-//    }
-//}
+
+extension MapViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        FilterPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotation = annotation as? Finding else { return nil }
+
+        switch annotation.type {
+        case .nature:
+            return NatureAnnotationView(annotation: annotation, reuseIdentifier: NatureAnnotationView.ReuseID)
+        case .mushroom:
+            return ShroomAnnotationView(annotation: annotation, reuseIdentifier: ShroomAnnotationView.ReuseID)
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if(view.isKind(of: NatureAnnotationView.self) || view.isKind(of: ShroomAnnotationView.self)) {
+            let filterVC = FilterViewController()
+            
+            filterVC.modalPresentationStyle = .custom
+            filterVC.transitioningDelegate = self
+            
+            filterVC.onDoneBlock = { result in
+                let pin = view.annotation
+                mapView.deselectAnnotation(pin, animated: true)
+            }
+            
+            self.present(filterVC, animated: true, completion: nil)
+        }
+    }
+}
