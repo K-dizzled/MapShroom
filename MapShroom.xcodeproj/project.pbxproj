@@ -9,12 +9,22 @@
 /* Begin PBXBuildFile section */
 		75AACCD027ED1B6900A3EB20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACCCF27ED1B6900A3EB20 /* AppDelegate.swift */; };
 		75AACCD227ED1B6900A3EB20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACCD127ED1B6900A3EB20 /* SceneDelegate.swift */; };
-		75AACCD427ED1B6900A3EB20 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACCD327ED1B6900A3EB20 /* RootViewController.swift */; };
 		75AACCD927ED1B6B00A3EB20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75AACCD827ED1B6B00A3EB20 /* Assets.xcassets */; };
 		75AACCDC27ED1B6B00A3EB20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75AACCDA27ED1B6B00A3EB20 /* LaunchScreen.storyboard */; };
 		75AACCE727ED1B6B00A3EB20 /* MapShroomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACCE627ED1B6B00A3EB20 /* MapShroomTests.swift */; };
 		75AACCF127ED1B6B00A3EB20 /* MapShroomUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACCF027ED1B6B00A3EB20 /* MapShroomUITests.swift */; };
 		75AACCF327ED1B6B00A3EB20 /* MapShroomUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACCF227ED1B6B00A3EB20 /* MapShroomUITestsLaunchTests.swift */; };
+		75AACD0127ED211E00A3EB20 /* UiView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0027ED211E00A3EB20 /* UiView+Extension.swift */; };
+		75AACD0827EE050700A3EB20 /* MKMapView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0727EE050700A3EB20 /* MKMapView+Extension.swift */; };
+		75AACD0A27EE059200A3EB20 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0927EE059200A3EB20 /* MapViewController.swift */; };
+		75AACD0D27EE115B00A3EB20 /* UiImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0C27EE115B00A3EB20 /* UiImage+Extension.swift */; };
+		75AACD0F27EE1A9B00A3EB20 /* NSDate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD0E27EE1A9B00A3EB20 /* NSDate+Extension.swift */; };
+		75AACD1327EE667900A3EB20 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD1227EE667900A3EB20 /* FilterViewController.swift */; };
+		75AACD1527EE668900A3EB20 /* FilterPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD1427EE668900A3EB20 /* FilterPresentationController.swift */; };
+		75AACD1727EE734F00A3EB20 /* NatureAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD1627EE734F00A3EB20 /* NatureAnnotationView.swift */; };
+		75AACD1D27EE78F000A3EB20 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD1C27EE78F000A3EB20 /* ClusterAnnotationView.swift */; };
+		75AACD1F27EE792A00A3EB20 /* Finding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD1E27EE792A00A3EB20 /* Finding.swift */; };
+		75AACD2127EE894C00A3EB20 /* MapPointInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AACD2027EE894C00A3EB20 /* MapPointInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +48,6 @@
 		75AACCCC27ED1B6900A3EB20 /* MapShroom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapShroom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75AACCCF27ED1B6900A3EB20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75AACCD127ED1B6900A3EB20 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		75AACCD327ED1B6900A3EB20 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		75AACCD827ED1B6B00A3EB20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75AACCDB27ED1B6B00A3EB20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		75AACCDD27ED1B6B00A3EB20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +56,17 @@
 		75AACCEC27ED1B6B00A3EB20 /* MapShroomUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapShroomUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75AACCF027ED1B6B00A3EB20 /* MapShroomUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapShroomUITests.swift; sourceTree = "<group>"; };
 		75AACCF227ED1B6B00A3EB20 /* MapShroomUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapShroomUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		75AACD0027ED211E00A3EB20 /* UiView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiView+Extension.swift"; sourceTree = "<group>"; };
+		75AACD0727EE050700A3EB20 /* MKMapView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Extension.swift"; sourceTree = "<group>"; };
+		75AACD0927EE059200A3EB20 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		75AACD0C27EE115B00A3EB20 /* UiImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiImage+Extension.swift"; sourceTree = "<group>"; };
+		75AACD0E27EE1A9B00A3EB20 /* NSDate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Extension.swift"; sourceTree = "<group>"; };
+		75AACD1227EE667900A3EB20 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		75AACD1427EE668900A3EB20 /* FilterPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPresentationController.swift; sourceTree = "<group>"; };
+		75AACD1627EE734F00A3EB20 /* NatureAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NatureAnnotationView.swift; sourceTree = "<group>"; };
+		75AACD1C27EE78F000A3EB20 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
+		75AACD1E27EE792A00A3EB20 /* Finding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finding.swift; sourceTree = "<group>"; };
+		75AACD2027EE894C00A3EB20 /* MapPointInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,9 +117,13 @@
 		75AACCCE27ED1B6900A3EB20 /* MapShroom */ = {
 			isa = PBXGroup;
 			children = (
+				75AACD0227EDFE7800A3EB20 /* Annotations */,
+				75AACCFF27ED211000A3EB20 /* Extensions */,
 				75AACCCF27ED1B6900A3EB20 /* AppDelegate.swift */,
 				75AACCD127ED1B6900A3EB20 /* SceneDelegate.swift */,
-				75AACCD327ED1B6900A3EB20 /* RootViewController.swift */,
+				75AACD0927EE059200A3EB20 /* MapViewController.swift */,
+				75AACD1227EE667900A3EB20 /* FilterViewController.swift */,
+				75AACD1427EE668900A3EB20 /* FilterPresentationController.swift */,
 				75AACCD827ED1B6B00A3EB20 /* Assets.xcassets */,
 				75AACCDA27ED1B6B00A3EB20 /* LaunchScreen.storyboard */,
 				75AACCDD27ED1B6B00A3EB20 /* Info.plist */,
@@ -122,6 +146,28 @@
 				75AACCF227ED1B6B00A3EB20 /* MapShroomUITestsLaunchTests.swift */,
 			);
 			path = MapShroomUITests;
+			sourceTree = "<group>";
+		};
+		75AACCFF27ED211000A3EB20 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				75AACD0027ED211E00A3EB20 /* UiView+Extension.swift */,
+				75AACD0727EE050700A3EB20 /* MKMapView+Extension.swift */,
+				75AACD0C27EE115B00A3EB20 /* UiImage+Extension.swift */,
+				75AACD0E27EE1A9B00A3EB20 /* NSDate+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		75AACD0227EDFE7800A3EB20 /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				75AACD2027EE894C00A3EB20 /* MapPointInfo.swift */,
+				75AACD1627EE734F00A3EB20 /* NatureAnnotationView.swift */,
+				75AACD1C27EE78F000A3EB20 /* ClusterAnnotationView.swift */,
+				75AACD1E27EE792A00A3EB20 /* Finding.swift */,
+			);
+			path = Annotations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,9 +300,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75AACCD427ED1B6900A3EB20 /* RootViewController.swift in Sources */,
 				75AACCD027ED1B6900A3EB20 /* AppDelegate.swift in Sources */,
+				75AACD2127EE894C00A3EB20 /* MapPointInfo.swift in Sources */,
+				75AACD0F27EE1A9B00A3EB20 /* NSDate+Extension.swift in Sources */,
+				75AACD1327EE667900A3EB20 /* FilterViewController.swift in Sources */,
+				75AACD0127ED211E00A3EB20 /* UiView+Extension.swift in Sources */,
+				75AACD0D27EE115B00A3EB20 /* UiImage+Extension.swift in Sources */,
+				75AACD1727EE734F00A3EB20 /* NatureAnnotationView.swift in Sources */,
 				75AACCD227ED1B6900A3EB20 /* SceneDelegate.swift in Sources */,
+				75AACD1F27EE792A00A3EB20 /* Finding.swift in Sources */,
+				75AACD0827EE050700A3EB20 /* MKMapView+Extension.swift in Sources */,
+				75AACD0A27EE059200A3EB20 /* MapViewController.swift in Sources */,
+				75AACD1D27EE78F000A3EB20 /* ClusterAnnotationView.swift in Sources */,
+				75AACD1527EE668900A3EB20 /* FilterPresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +411,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -410,7 +466,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -434,6 +490,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -461,6 +518,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
